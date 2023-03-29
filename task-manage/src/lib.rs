@@ -44,9 +44,11 @@ pub use thread_manager::PThreadManager;
 # [cfg(test)]
 mod tests{
 
+
     use crate::id::ProcId;
     use crate::id::ThreadId;
     use crate::proc_manage::PManager;
+    use crate::thread_manager::PThreadManager;
     use crate::proc_rel::ProcRel;
     use crate::proc_thread_rel::ProcThreadRel;
 
@@ -54,7 +56,7 @@ mod tests{
     use alloc::collections::VecDeque;
     use crate::Manage;
     use crate::Schedule;
-    use core::marker::PhantomData;
+    //use core::marker::PhantomData;
     
 
     #[test]
@@ -77,6 +79,8 @@ mod tests{
     #[test]
     fn test_proc_manage(){
         /// 进程。
+        #[derive(PartialEq)]
+        #[derive(Debug)]
         pub struct Process {
             /// 不可变
             pub pid: ProcId,
@@ -84,6 +88,13 @@ mod tests{
             //pub context: ForeignContext,
             //pub address_space: AddressSpace<Sv39, Sv39Manager>,
         }
+
+        impl Process {
+            pub fn new() -> Self {
+                Self { pid: ProcId::new() }
+            }
+        }
+
         pub struct ProcManager {
             tasks: BTreeMap<ProcId, Process>,
             ready_queue: VecDeque<ProcId>,
@@ -130,10 +141,176 @@ mod tests{
         let procmanager = ProcManager::new();
         //新建 PManager
         let mut pmanager = PManager::<Process, ProcManager>::new();
-        //PManager::<Process, ProcManager>::find_next(&mut pmanager);
+        
+        //设置manager
         PManager::set_manager(&mut pmanager, procmanager);
-        PManager::current(&mut pmanager);
+
+        //添加进程
+        let parent =  ProcId::new();
+        let id = ProcId::from_usize(3);
+        let id1 = ProcId::from_usize(1);
+        let task = Process::new();
+        PManager::add(&mut pmanager, id, task, parent);
+        //PManager::current(&mut pmanager);
+        //获取指定进程
+        PManager::get_task(&mut pmanager, id);
+        let mut task1 = Process::new();
+        task1.pid = id1;
+        assert_eq!(Some(&mut task1),PManager::get_task(&mut pmanager, id));
+
+        
+        assert_eq!(Some(&mut task1), PManager::<Process, ProcManager>::find_next(&mut pmanager));
     }
+
+
+//     #[test]
+//     fn test_proc_thread_manage(){
+//         /// 进程。
+//         #[derive(PartialEq)]
+//         #[derive(Debug)]
+//         pub struct Process {
+//             /// 不可变
+//             pub pid: ProcId,
+//             // 可变
+//             //pub context: ForeignContext,
+//             //pub address_space: AddressSpace<Sv39, Sv39Manager>,
+//         }
+
+//         impl Process {
+//             pub fn new() -> Self {
+//                 Self { pid: ProcId::new() }
+//             }
+//         }
+
+//         pub struct ProcManager {
+//             tasks: BTreeMap<ProcId, Process>,
+//             ready_queue: VecDeque<ProcId>,
+//         }
+        
+//         impl ProcManager {
+//             /// 新建任务管理器
+//             pub fn new() -> Self {
+//                 Self {
+//                     tasks: BTreeMap::new(),
+//                     ready_queue: VecDeque::new(),
+//                 }
+//             }
+//         }
+        
+//         impl Manage<Process, ProcId> for ProcManager {
+//             /// 插入一个新任务
+//             #[inline]
+//             fn insert(&mut self, id: ProcId, task: Process) {
+//                 self.tasks.insert(id, task);
+//             }
+//             /// 删除任务实体
+//             #[inline]
+//             fn delete(&mut self, id: ProcId) {
+//                 self.tasks.remove(&id);
+//             }
+//             /// 根据 id 获取对应的任务
+//             #[inline]
+//             fn get_mut(&mut self, id: ProcId) -> Option<&mut Process> {
+//                 self.tasks.get_mut(&id)
+//             }
+//         }
+        
+//         impl Schedule<ProcId> for ProcManager {
+//             /// 添加 id 进入调度队列
+//             fn add(&mut self, id: ProcId) {
+//                 self.ready_queue.push_back(id);
+//             }
+//             /// 从调度队列中取出 id
+//             fn fetch(&mut self) -> Option<ProcId> {
+//                 self.ready_queue.pop_front()
+//             }
+//         }
+
+//         /// 线程。
+//         #[derive(PartialEq)]
+//         #[derive(Debug)]
+//         pub struct Thread {
+//             /// 不可变
+//             pub pid: ThreadId,
+//             // 可变
+//             //pub context: ForeignContext,
+//             //pub address_space: AddressSpace<Sv39, Sv39Manager>,
+//         }
+
+//         impl Process {
+//             pub fn new() -> Self {
+//                 Self { pid: ThreadId::new() }
+//             }
+//         }
+
+//         pub struct ProcThreadManager {
+//             tasks: BTreeMap<ThreadId, Thread>,
+//             ready_queue: VecDeque<ThreadId>,
+//         }
+        
+//         impl ProcManager {
+//             /// 新建任务管理器
+//             pub fn new() -> Self {
+//                 Self {
+//                     tasks: BTreeMap::new(),
+//                     ready_queue: VecDeque::new(),
+//                 }
+//             }
+//         }
+        
+//         impl Manage<Thread, ThreadId> for ProcThreadManager {
+//             /// 插入一个新任务
+//             #[inline]
+//             fn insert(&mut self, id: ThreadId, task: Thread) {
+//                 self.tasks.insert(id, task);
+//             }
+//             /// 删除任务实体
+//             #[inline]
+//             fn delete(&mut self, id: ThreadId) {
+//                 self.tasks.remove(&id);
+//             }
+//             /// 根据 id 获取对应的任务
+//             #[inline]
+//             fn get_mut(&mut self, id: ThreadId) -> Option<&mut Thread> {
+//                 self.tasks.get_mut(&id)
+//             }
+//         }
+        
+//         impl Schedule<ThreadId> for ProcManager {
+//             /// 添加 id 进入调度队列
+//             fn add(&mut self, id: ThreadId) {
+//                 self.ready_queue.push_back(id);
+//             }
+//             /// 从调度队列中取出 id
+//             fn fetch(&mut self) -> Option<ThreadId> {
+//                 self.ready_queue.pop_front()
+//             }
+//         }
+
+//         let procmanager = ProcManager::new();
+//         //新建 PManager
+//         let mut pmanager = PThreadManager::<Process, ProcManager>::new();
+        
+//         //设置manager
+//         PThreadManager::set_manager(&mut pmanager, procmanager);
+
+//         //添加进程
+//         let parent =  ProcId::new();
+//         let id = ProcId::from_usize(3);
+//         let id1 = ProcId::from_usize(1);
+//         let task = Process::new();
+//         PThreadManager::add(&mut pmanager, id, task, parent);
+//         //PManager::current(&mut pmanager);
+//         //获取指定进程
+//         PThreadManager::get_task(&mut pmanager, id);
+//         let mut task1 = Process::new();
+//         task1.pid = id1;
+//         assert_eq!(Some(&mut task1),PThreadManager::get_task(&mut pmanager, id));
+
+        
+//         assert_eq!(Some(&mut task1), PThreadManager::<Process, ProcManager>::find_next(&mut pmanager));
+//     }
+// a
 
 
 

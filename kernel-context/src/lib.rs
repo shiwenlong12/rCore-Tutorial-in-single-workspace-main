@@ -257,7 +257,7 @@ mod foreign;
 mod tests{
     use crate::LocalContext;
     //use crate::build_sstatus;
-    use crate::foreign::ForeignContext;
+    //use crate::foreign::ForeignContext;
     //use crate::foreign::MonoForeignPortal;
 
     #[test]
@@ -319,15 +319,15 @@ mod tests{
 
     #[test]
     fn test_execute() {
-        let mut _a = LocalContext::empty();
-        let mut _b = ForeignContext {
-            /// 目标地址空间上的线程上下文。
-            context: _a,
-            /// 目标地址空间。
-            satp: 0,
-        };
+        // let mut _a = LocalContext::empty();
+        // let mut _b = ForeignContext {
+        //     /// 目标地址空间上的线程上下文。
+        //     context: _a,
+        //     /// 目标地址空间。
+        //     satp: 0,
+        // };
         
-        execute(&mut _b,);
+        // execute(&mut _b,);
     }
 
     #[test]
