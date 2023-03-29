@@ -253,6 +253,7 @@ unsafe extern "C" fn execute_naked() {
 }
 
 mod foreign;
+
 # [cfg(test)]
 mod tests{
     use crate::LocalContext;

@@ -193,12 +193,12 @@ mod tests{
     }
 
     #[test]
-    fn test_() {
+    fn test_default_action() {
         
     }
 
     #[test]
-    fn test_() {
+    fn test_signal_set() {
         
     }
 }
