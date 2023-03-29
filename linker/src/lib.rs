@@ -311,20 +311,20 @@ mod tests{
 
         };
 
-        let _b = KernelRegionIterator{
-            KernelLayout {
-                text: usize::MAX,
-                rodata: usize::MAX,
-                data: usize::MAX,
-                sbss: usize::MAX,
-                ebss: usize::MAX,
-                boot: usize::MAX,
-                end: usize::MAX,
-            },
-            Some(KernelRegionTitle::Text),
-        };
+        // let _b = KernelRegionIterator{
+        //     KernelLayout {
+        //         text: usize::MAX,
+        //         rodata: usize::MAX,
+        //         data: usize::MAX,
+        //         sbss: usize::MAX,
+        //         ebss: usize::MAX,
+        //         boot: usize::MAX,
+        //         end: usize::MAX,
+        //     },
+        //     Some(KernelRegionTitle::Text),
+        // };
 
-        KernelRegionIterator::next(&mut _b);
+        // KernelRegionIterator::next(&mut _b);
     }
     
 }

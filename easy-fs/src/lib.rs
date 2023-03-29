@@ -28,16 +28,25 @@ mod tests{
     //use crate::BlockDevice;
     use crate::file::{UserBuffer};
 
+    // use alloc::{
+    //     alloc::{alloc_zeroed, dealloc},
+    //     sync::Arc,
+    // };
+    // use core::{alloc::Layout, ptr::NonNull};
+    // use crate::BlockDevice;
+    // use spin::{Lazy, Mutex};
+    // use virtio_drivers::{Hal, VirtIOBlk, VirtIOHeader};
 
-    // use alloc::sync::Arc;
-    // use spin::Mutex;
+    // static mut KERNEL_SPACE: MaybeUninit<AddressSpace<Sv39, Sv39Manager>> = MaybeUninit::uninit();
+    // const VIRTIO0: usize = 0x10001000;
 
-
-    // pub struct VirtIOBlk<'a, H: Hal> {
-    //     header: &'static mut VirtIOHeader,
-    //     queue: VirtQueue<'a, H>,
-    //     capacity: usize,
-    // }
+    // pub static BLOCK_DEVICE: Lazy<Arc<dyn BlockDevice>> = Lazy::new(|| {
+    //     Arc::new(unsafe {
+    //         VirtIOBlock(Mutex::new(
+    //             VirtIOBlk::new(&mut *(VIRTIO0 as *mut VirtIOHeader)).unwrap(),
+    //         ))
+    //     })
+    // });
     // struct VirtIOBlock(Mutex<VirtIOBlk<'static, VirtioHal>>);
 
     // impl BlockDevice for VirtIOBlock {
@@ -52,6 +61,47 @@ mod tests{
     //             .lock()
     //             .write_block(block_id, buf)
     //             .expect("Error when writing VirtIOBlk");
+    //     }
+    // }
+    // struct VirtioHal;
+
+    // impl Hal for VirtioHal {
+    //     fn dma_alloc(pages: usize) -> usize {
+    //         // warn!("dma_alloc");
+    //         unsafe {
+    //             alloc_zeroed(Layout::from_size_align_unchecked(
+    //                 pages << Sv39::PAGE_BITS,
+    //                 1 << Sv39::PAGE_BITS,
+    //             )) as _
+    //         }
+    //     }
+
+    //     fn dma_dealloc(paddr: usize, pages: usize) -> i32 {
+    //         // warn!("dma_dealloc");
+    //         unsafe {
+    //             dealloc(
+    //                 paddr as _,
+    //                 Layout::from_size_align_unchecked(pages << Sv39::PAGE_BITS, 1 << Sv39::PAGE_BITS),
+    //             )
+    //         }
+    //         0
+    //     }
+
+    //     fn phys_to_virt(paddr: usize) -> usize {
+    //         // warn!("p2v");
+    //         paddr
+    //     }
+
+    //     fn virt_to_phys(vaddr: usize) -> usize {
+    //         // warn!("v2p");
+    //         const VALID: VmFlags<Sv39> = VmFlags::build_from_str("__V");
+    //         let ptr: NonNull<u8> = unsafe {
+    //             KERNEL_SPACE
+    //                 .assume_init_ref()
+    //                 .translate(VAddr::new(vaddr), VALID)
+    //                 .unwrap()
+    //         };
+    //         ptr.as_ptr() as usize
     //     }
     // }
 
@@ -91,14 +141,14 @@ mod tests{
     use crate::layout::{SuperBlock};
     #[test]
     fn test_layout() {
-        let a = SuperBlock{
-            magic: 0x3b800001,
-            total_blocks: 512,
-            inode_bitmap_blocks: 1,
-            inode_area_blocks: 1,
-            data_bitmap_blocks: 1,
-            data_area_blocks: 1,
-        };
+        // let a = SuperBlock{
+        //     magic: 0x3b800001,
+        //     total_blocks: 512,
+        //     inode_bitmap_blocks: 1,
+        //     inode_area_blocks: 1,
+        //     data_bitmap_blocks: 1,
+        //     data_area_blocks: 1,
+        // };
         //SuperBlock::initialize(a,EFS_MAGIC,);
     }
 

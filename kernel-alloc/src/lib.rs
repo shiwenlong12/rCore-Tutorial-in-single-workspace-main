@@ -1,7 +1,7 @@
 //! 内存分配。
 
 #![no_std]
-#![deny(warnings, missing_docs)]
+//#![deny(warnings, missing_docs)]
 
 extern crate alloc;
 
@@ -38,7 +38,7 @@ pub unsafe fn transfer(region: &'static mut [u8]) {
     HEAP.transfer(ptr, region.len());
 }
 
-/// 堆分配器。
+/// 堆分配器。/伙伴分配器
 ///
 /// 最大容量：6 + 21 + 3 = 30 -> 1 GiB。
 /// 不考虑并发使用，因此没有加锁。
@@ -67,25 +67,72 @@ unsafe impl GlobalAlloc for Global {
 
 #[cfg(test)]
 mod tests {
-    use crate::init;
+    
+    use crate::{init,transfer};
     use crate::Global;
     use crate::Layout;
-    use::core::ptr::Alignment;
     use core::alloc::GlobalAlloc;
+    // 物理内存容量 = 24 MiB。
+    const MEMORY: usize = 24 << 20;
 
+    // pub struct KernelLayout {
+    //     text: usize,
+    //     rodata: usize,
+    //     data: usize,
+    //     sbss: usize,
+    //     ebss: usize,
+    //     boot: usize,
+    //     end: usize,
+    // }
+    
+    // impl KernelLayout {
+    //     /// 非零初始化，避免 bss。
+    //     pub const INIT: Self = Self {
+    //         text: usize::MAX,
+    //         rodata: usize::MAX,
+    //         data: usize::MAX,
+    //         sbss: usize::MAX,
+    //         ebss: usize::MAX,
+    //         boot: usize::MAX,
+    //         end: usize::MAX,
+    //     };
+    // }
+
+    // const PAGE: Layout =
+    //     unsafe { Layout::from_size_align_unchecked(2 << Sv39::PAGE_BITS, 1 << Sv39::PAGE_BITS) };
+
+    use alloc::alloc::{alloc_zeroed, dealloc};
     #[test]
     fn test_alloc() {
-        init(8000_0000);
-        //我们的需求是分配一块连续的、大小至少为 size 字节的虚拟内存，且对齐要求为 align
-        let layout = Layout {
-            //size 表示要分配的字节数，
-            size: 512,
-            //align 则表示分配的虚拟地址的最小对齐要求，即分配的地址要求是 align 的倍数。
-            //这里的 align 必须是2的幂次。
-            align: Alignment(1),
-        };
-        let global = Global{};
+        init(8000_1000);
 
-        let a = Global::alloc(&global,layout);
+        unsafe {
+            let layout = Layout::new::<u16>();
+            let ptr = alloc_zeroed(layout);
+
+            assert_eq!(*(ptr as *mut u16), 0);
+
+            dealloc(ptr, layout);
+        }
+        //let a = Alignment::new(1024).unwrap();
+        //我们的需求是分配一块连续的、大小至少为 size 字节的虚拟内存，且对齐要求为 align
+
+        // unsafe {
+        //     transfer(core::slice::from_raw_parts_mut(
+        //         layout.end() as _,
+        //         MEMORY - layout.len(),
+        //     ))
+        // };
+
+        // let layout = Layout {
+        //     //size 表示要分配的字节数，
+        //     size: 512,
+        //     //align 则表示分配的虚拟地址的最小对齐要求，即分配的地址要求是 align 的倍数。
+        //     //这里的 align 必须是2的幂次。
+        //     align: 1024,
+        // };
+        // let global = Global{};
+
+        // let a = Global::alloc(&global,layout);
     }
 }

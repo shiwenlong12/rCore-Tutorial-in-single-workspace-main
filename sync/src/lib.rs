@@ -72,7 +72,7 @@ mod tests{
         //(&mut a).enter();
         unsafe{
             let upintr = UPIntrFreeCell::new(value);
-            //(& upintr).exclusive_access();
+            (& upintr).exclusive_access();
         }
 
     }
