@@ -50,10 +50,6 @@ mod tests{
 
     //use crate::space::mapper::Mapper;
     use crate::space::AddressSpace;
-    //use crate::PageManager;
-    //use page_table::{MmuMeta, PageTable, PageTableFormatter, Pos, VAddr, VmFlags, VmMeta, PPN, VPN};
-
-    //use alloc::alloc::alloc_zeroed;
     use core::{alloc::Layout, ptr::NonNull};
     use crate::{
         page_table::{MmuMeta, Pte, VAddr, VmFlags, PPN, VPN},
@@ -79,6 +75,7 @@ mod tests{
     #[repr(transparent)]
     pub struct Sv39Manager(NonNull<Pte<Sv39>>);
 
+    //实现page_alloc
     extern "Rust" {
         fn __rust_alloc_zeroed(size: usize, align: usize) -> *mut u8;
     }
@@ -159,19 +156,23 @@ mod tests{
 
     #[test]
     fn test_space() {
+        // 创建新地址空间。
+        let addressspace = AddressSpace::<Sv39, Sv39Manager>::new();
+        // 地址空间根页表的物理页号。
+        let ppn = (& addressspace).root_ppn();
+        // 地址空间根页表
+        let root = (& addressspace).root();
+        // 向地址空间增加映射关系。
+        let mut address1 = AddressSpace::<Sv39, Sv39Manager>::new();
+        //let range = Range::VPN::Sv39::new();
+        //let map1 = (&mut address1).map_extern();
+        // 分配新的物理页，拷贝数据并建立映射。
+
+        // 检查 `flags` 的属性要求，然后将地址空间中的一个虚地址翻译成当前地址空间中的指针。
+
+        // 遍历地址空间，将其中的地址映射添加进自己的地址空间中，重新分配物理页并拷贝所有数据及代码
 
 
-        
-        /*
-        let a = AddressSpace{
-            areas: Vec::Range::VPN::Sv39,
-            page_manager: M,
-        };
-         */
-        
-
-        //AddressSpace::<Sv39, dyn PageManager<Sv39>>::new();
-        //Sv39::new_root();
     }
 
 
