@@ -130,6 +130,7 @@ mod tests {
         //     ))
         // };
 
+        //实现page_alloc
         extern "Rust" {
             fn __rust_alloc_zeroed(size: usize, align: usize) -> *mut u8;
         }

@@ -165,6 +165,9 @@ mod tests{
         // 向地址空间增加映射关系。
         let mut address1 = AddressSpace::<Sv39, Sv39Manager>::new();
         //let range = Range::VPN::Sv39::new();
+        let pages = 2;
+        //VPN::new((1 << 26) - pages)..VPN::new(1 << 26);
+        //PageNumber::<Meta, S>::new;
         //let map1 = (&mut address1).map_extern();
         // 分配新的物理页，拷贝数据并建立映射。
 

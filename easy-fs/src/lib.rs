@@ -36,6 +36,104 @@ mod tests{
     // use crate::BlockDevice;
     // use spin::{Lazy, Mutex};
     // use virtio_drivers::{Hal, VirtIOBlk, VirtIOHeader};
+    // use core::mem::MaybeUninit;
+
+    // use page_table::{MmuMeta, Pte, VAddr, VmFlags, PPN, VPN};
+
+    // #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Debug)]
+    // pub(crate) struct Sv39;
+
+    // impl MmuMeta for Sv39 {
+    //     const P_ADDR_BITS: usize = 56;
+    //     const PAGE_BITS: usize = 12;
+    //     const LEVEL_BITS: &'static [usize] = &[9; 3];
+    //     const PPN_POS: usize = 10;
+
+    //     #[inline]
+    //     fn is_leaf(value: usize) -> bool {
+    //         const MASK: usize = 0b1110;
+    //         value & MASK != 0
+    //     }
+    // }
+
+    // #[repr(transparent)]
+    // pub struct Sv39Manager(NonNull<Pte<Sv39>>);
+
+    // //实现page_alloc
+    // extern "Rust" {
+    //     fn __rust_alloc_zeroed(size: usize, align: usize) -> *mut u8;
+    // }
+
+
+    // #[must_use = "losing the pointer will leak memory"]
+    // #[inline]
+    // pub unsafe fn alloc_zeroed(layout: Layout) -> *mut u8 {
+    //     unsafe { __rust_alloc_zeroed(layout.size(), layout.align()) }
+    // }
+
+    // impl Sv39Manager {
+    //     const OWNED: VmFlags<Sv39> = unsafe { VmFlags::from_raw(1 << 8) };
+
+    //     #[inline]
+    //     fn page_alloc<T>(count: usize) -> *mut T {
+    //         unsafe {
+    //             alloc_zeroed(Layout::from_size_align_unchecked(
+    //                 count << Sv39::PAGE_BITS,
+    //                 1 << Sv39::PAGE_BITS,
+    //             ))
+    //         }
+    //         .cast()
+    //     }
+    // }
+
+    // impl PageManager<Sv39> for Sv39Manager {
+    //     #[inline]
+    //     fn new_root() -> Self {
+    //         Self(NonNull::new(Self::page_alloc(1)).unwrap())
+    //     }
+
+    //     #[inline]
+    //     fn root_ppn(&self) -> PPN<Sv39> {
+    //         PPN::new(self.0.as_ptr() as usize >> Sv39::PAGE_BITS)
+    //     }
+
+    //     #[inline]
+    //     fn root_ptr(&self) -> NonNull<Pte<Sv39>> {
+    //         self.0
+    //     }
+
+    //     #[inline]
+    //     fn p_to_v<T>(&self, ppn: PPN<Sv39>) -> NonNull<T> {
+    //         unsafe { NonNull::new_unchecked(VPN::<Sv39>::new(ppn.val()).base().as_mut_ptr()) }
+    //     }
+
+    //     #[inline]
+    //     fn v_to_p<T>(&self, ptr: NonNull<T>) -> PPN<Sv39> {
+    //         PPN::new(VAddr::<Sv39>::new(ptr.as_ptr() as _).floor().val())
+    //     }
+
+    //     #[inline]
+    //     fn check_owned(&self, pte: Pte<Sv39>) -> bool {
+    //         pte.flags().contains(Self::OWNED)
+    //     }
+
+    //     #[inline]
+    //     fn allocate(&mut self, len: usize, flags: &mut VmFlags<Sv39>) -> NonNull<u8> {
+    //         *flags |= Self::OWNED;
+    //         NonNull::new(Self::page_alloc(len)).unwrap()
+    //     }
+
+    //     fn deallocate(&mut self, _pte: Pte<Sv39>, _len: usize) -> usize {
+    //         todo!()
+    //     }
+
+    //     fn drop_root(&mut self) {
+    //         todo!()
+    //     }
+    // } 
+
+
+
 
     // static mut KERNEL_SPACE: MaybeUninit<AddressSpace<Sv39, Sv39Manager>> = MaybeUninit::uninit();
     // const VIRTIO0: usize = 0x10001000;
