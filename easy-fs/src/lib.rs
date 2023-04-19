@@ -2,7 +2,7 @@
 #![no_std]
 // #![deny(missing_docs)]
 extern crate alloc;
-mod bitmap;
+pub mod bitmap;
 mod block_cache;
 mod block_dev;
 mod efs;
@@ -396,7 +396,7 @@ mod tests{
     #[test]
     fn test_bitmap() {
         let bitmap1 = Bitmap::new(VIRTIO0,100);
-        //let _a = &BLOCK_DEVICE.clone();
+        let _a = &BLOCK_DEVICE.clone();
         //bitmap1.alloc(&BLOCK_DEVICE.clone());
         //(& bitmap1).dealloc(&block_device1, 300);
         //测试获取可分配块的最大数量
@@ -519,3 +519,4 @@ mod tests{
         
     }
 }
+
