@@ -10,3 +10,8 @@ authors = ["zflcs <zhaofangliang@foxmail.com>"]
 riscv = "0.9"
 spin = "0.9.4"
 rcore-task-manage = { path = "../task-manage", features = ["thread"] }
+
+
+[features]
+kernel = []
+user = []

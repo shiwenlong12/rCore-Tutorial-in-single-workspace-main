@@ -6,4 +6,8 @@ authors = ["scPointer <jax01@foxmail.com>"]
 
 [dependencies]
 kernel-context = { path = "../kernel-context" }
-signal = { path = "../signal" }
+signal = { path = "../signal" , features = ["kernel"] }
+
+[features]
+kernel = []
+user = []

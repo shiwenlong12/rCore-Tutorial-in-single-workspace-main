@@ -11,4 +11,5 @@ virtio-drivers = { git = "https://github.com/rcore-os/virtio-drivers", rev = "4e
 spin = "0.7.0"
 bitflags = "1.2.1"
 
-page-table = "0.0.6"
+# page-table = "0.0.6"
+# clap = "2.33.3"

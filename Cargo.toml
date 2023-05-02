@@ -12,7 +12,7 @@ members = [
     "ch8",
     "user",
     "linker",
-    "console",
+
     "syscall",
     "kernel-context",
     "kernel-alloc",

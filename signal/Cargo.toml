@@ -7,3 +7,7 @@ authors = ["scPointer <jax01@foxmail.com>"]
 [dependencies]
 kernel-context = { path = "../kernel-context" }
 signal-defs = { path = "../signal-defs" }
+
+[features]
+kernel = []
+user = []

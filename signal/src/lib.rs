@@ -8,6 +8,127 @@
 
 extern crate alloc;
 use alloc::boxed::Box;
+#[cfg(feature = "user")]
+/// 线程上下文。
+#[derive(Clone)]
+#[repr(C)]
+pub struct LocalContext {
+    sctx: usize,
+    x: [usize; 31],
+    sepc: usize,
+    /// 是否以特权态切换。
+    pub supervisor: bool,
+    /// 线程中断是否开启。
+    pub interrupt: bool,
+}
+
+#[cfg(feature = "user")]
+impl LocalContext {
+    /// 创建空白上下文。
+    #[inline]
+    pub const fn empty() -> Self {
+        Self {
+            sctx: 0,
+            x: [0; 31],
+            supervisor: false,
+            interrupt: false,
+            sepc: 0,
+        }
+    }
+
+    /// 初始化指定入口的用户上下文。
+    ///
+    /// 切换到用户态时会打开内核中断。
+    #[inline]
+    pub const fn user(pc: usize) -> Self {
+        Self {
+            sctx: 0,
+            x: [0; 31],
+            supervisor: false,
+            interrupt: true,
+            sepc: pc,
+        }
+    }
+
+    /// 初始化指定入口的内核上下文。
+    #[inline]
+    pub const fn thread(pc: usize, interrupt: bool) -> Self {
+        Self {
+            sctx: 0,
+            x: [0; 31],
+            supervisor: true,
+            interrupt,
+            sepc: pc,
+        }
+    }
+
+    /// 读取用户通用寄存器。
+    #[inline]
+    pub fn x(&self, n: usize) -> usize {
+        self.x[n - 1]
+    }
+
+    /// 修改用户通用寄存器。
+    #[inline]
+    pub fn x_mut(&mut self, n: usize) -> &mut usize {
+        &mut self.x[n - 1]
+    }
+
+    /// 读取用户参数寄存器。
+    #[inline]
+    pub fn a(&self, n: usize) -> usize {
+        self.x(n + 10)
+    }
+
+    /// 修改用户参数寄存器。
+    #[inline]
+    pub fn a_mut(&mut self, n: usize) -> &mut usize {
+        self.x_mut(n + 10)
+    }
+
+    /// 读取用户栈指针。
+    #[inline]
+    pub fn ra(&self) -> usize {
+        self.x(1)
+    }
+
+    /// 读取用户栈指针。
+    #[inline]
+    pub fn sp(&self) -> usize {
+        self.x(2)
+    }
+
+    /// 修改用户栈指针。
+    #[inline]
+    pub fn sp_mut(&mut self) -> &mut usize {
+        self.x_mut(2)
+    }
+
+    /// 当前上下文的 pc。
+    #[inline]
+    pub fn pc(&self) -> usize {
+        self.sepc
+    }
+
+    /// 修改上下文的 pc。
+    #[inline]
+    pub fn pc_mut(&mut self) -> &mut usize {
+        &mut self.sepc
+    }
+
+    /// 将 pc 移至下一条指令。
+    ///
+    /// # Notice
+    ///
+    /// 假设这一条指令不是压缩版本。
+    #[inline]
+    pub fn move_next(&mut self) {
+        self.sepc = self.sepc.wrapping_add(4);
+    }
+
+}
+
+#[cfg(feature = "kernel")]
 use kernel_context::LocalContext;
 pub use signal_defs::{SignalAction, SignalNo, MAX_SIG};
 

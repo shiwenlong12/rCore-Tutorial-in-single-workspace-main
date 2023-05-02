@@ -8,10 +8,10 @@ authors = ["YdrMaster <ydrml@hotmail.com>"]
 sbi-rt = { version = "0.0.2", features = ["legacy"] }
 riscv = "0.9"
 
-linker = { path = "../linker" }
-rcore-console = { path = "../console" }
-kernel-context = { path = "../kernel-context" }
-syscall = { path = "../syscall", features = ["kernel"] }
+linker = { git = "https://github.com/shiwenlong12/linker"}
+rcore-console = { git = "https://github.com/shiwenlong12/console"}
+kernel-context = { git = "https://github.com/shiwenlong12/kernel-context"}
+syscall = { git = "https://github.com/shiwenlong12/syscall", features = ["kernel"] }
 
 [build-dependencies]
-linker = { path = "../linker" }
+linker = { git = "https://github.com/shiwenlong12/linker"}

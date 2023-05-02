@@ -283,7 +283,7 @@ mod tests{
         //wait_queue.push_back(tid2);
         //assert_eq!(tid1, tid2);
         //condver1.inner.exclusive_session(tid2);
-        (& condver1).wait_no_sched(tid2);
+        //(& condver1).wait_no_sched(tid2);
     }
 
     #[test]

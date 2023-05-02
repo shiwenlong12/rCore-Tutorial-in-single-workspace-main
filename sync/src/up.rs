@@ -1,5 +1,6 @@
 use core::cell::{RefCell, RefMut, UnsafeCell};
 use core::ops::{Deref, DerefMut};
+#[cfg(feature = "kernel")]
 use riscv::register::sstatus;
 use spin::Lazy;
 
@@ -69,10 +70,14 @@ impl IntrMaskingInfo {
     }
 
     pub fn enter(&mut self) {
+        #[cfg(feature = "kernel")]
         let sie = sstatus::read().sie();
+        #[cfg(feature = "kernel")]
         unsafe {
             sstatus::clear_sie();
         }
+        #[cfg(feature = "user")]
+        let sie = true;
         if self.nested_level == 0 {
             self.sie_before_masking = sie;
         }
@@ -82,10 +87,13 @@ impl IntrMaskingInfo {
     pub fn exit(&mut self) {
         self.nested_level -= 1;
         if self.nested_level == 0 && self.sie_before_masking {
+            #[cfg(feature = "kernel")]
             unsafe {
                 // 开启 SIE（不是 sie 寄存器），允许内核态被中断打断
                 sstatus::set_sie();
             }
+            // #[cfg(feature = "user")]
+            // let _SIE = true;
         }
     }
 }

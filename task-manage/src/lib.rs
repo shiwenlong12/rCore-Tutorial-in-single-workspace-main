@@ -2,7 +2,7 @@
 
 #![no_std]
 #![feature(doc_cfg)]
-//#![deny(warnings, missing_docs)]
+#![deny(warnings, missing_docs)]
 
 extern crate alloc;
 
@@ -33,39 +33,40 @@ pub use proc_thread_rel::ProcThreadRel;
 pub use thread_manager::PThreadManager;
 
 
-// mod proc_manage;
-// mod proc_rel;
-// pub use proc_manage::PManager;
-// pub use proc_rel::ProcRel;
-// mod proc_thread_rel;
-// mod thread_manager;
-// pub use proc_thread_rel::ProcThreadRel;
-// pub use thread_manager::PThreadManager;
 # [cfg(test)]
 mod tests{
 
 
-    use crate::id::ProcId;
-    use crate::id::ThreadId;
+    use crate::id::{ProcId, ThreadId};
+    use crate::Manage;
+    use crate::Schedule;
+
+    #[cfg(feature = "proc")]
     use crate::proc_manage::PManager;
-    use crate::thread_manager::PThreadManager;
+    #[cfg(feature = "proc")]
     use crate::proc_rel::ProcRel;
+
+    #[cfg(feature = "thread")]
+    use crate::thread_manager::PThreadManager;
+    #[cfg(feature = "thread")]
     use crate::proc_thread_rel::ProcThreadRel;
 
     use alloc::collections::BTreeMap;
     use alloc::collections::VecDeque;
-    use crate::Manage;
-    use crate::Schedule;
-    //use core::marker::PhantomData;
+
     
 
     #[test]
     fn test_id() {
-        //测试进程ID
+        //测试进程ID;new()任务编号自增
         let id1 = ProcId::new();
-        let _id2 = ProcId::from_usize(0);
+        let id2 = ProcId::from_usize(0);
+        assert_eq!(id1, id2);
+        let id11 = ProcId::new();
+        let id21 = ProcId::from_usize(1);
+        assert_eq!(id11, id21);
+
         let _id3 = ProcId::get_usize(&id1);
-        assert_eq!(id1, _id2);
         assert_eq!(0, _id3);
         let id4 = ProcId::from_usize(5);
         let id5 = ProcId::get_usize(&id4);
@@ -80,6 +81,7 @@ mod tests{
 
 
     #[test]
+    #[cfg(feature = "proc")]
     fn test_proc_manage(){
         /// 进程。
         #[derive(PartialEq)]
@@ -94,7 +96,7 @@ mod tests{
 
         impl Process {
             pub fn new() -> Self {
-                Self { pid: ProcId::new() }
+                Self { pid: ProcId::from_usize(0) }
             }
         }
 
@@ -149,9 +151,10 @@ mod tests{
         PManager::set_manager(&mut pmanager, procmanager);
 
         //添加进程
-        let parent =  ProcId::new();
+        //let parent =  ProcId::new();
+        let parent = ProcId::from_usize(0);
         let id = ProcId::from_usize(3);
-        let id1 = ProcId::from_usize(1);
+        let id1 = ProcId::from_usize(0);
         let task = Process::new();
         PManager::add(&mut pmanager, id, task, parent);
         //PManager::current(&mut pmanager);
@@ -165,7 +168,7 @@ mod tests{
         assert_eq!(Some(&mut task1), PManager::<Process, ProcManager>::find_next(&mut pmanager));
     }
 
-
+    #[cfg(feature = "thread")]
     #[test]
     fn test_proc_thread_manage(){
         /// 进程。
@@ -181,7 +184,7 @@ mod tests{
 
         impl Process {
             // pub fn new() -> Self {
-            //     Self { pid: ProcId::new() }
+            //     Self { pid: ProcId::from_usize(0) }
             // }
         }
 
@@ -242,7 +245,7 @@ mod tests{
 
         impl Thread {
             pub fn new() -> Self {
-                Self { pid: ThreadId::new() }
+                Self { pid: ThreadId::from_usize(0) }
             }
         }
 
@@ -301,10 +304,10 @@ mod tests{
         PThreadManager::set_proc_manager(&mut pmanager, procmanager);
 
         //添加进程
-        let parent =  ProcId::new();
+        let parent =  ProcId::from_usize(0);
         let _id = ProcId::from_usize(3);
         let _id1 = ProcId::from_usize(1);
-        let _tid = ThreadId::new();
+        let _tid = ThreadId::from_usize(0);
         let tid1 = ThreadId::from_usize(5);
         let task = Thread::new();
         PThreadManager::add(&mut pmanager, tid1, task, parent);
@@ -322,10 +325,10 @@ mod tests{
 
 
 
-
+    #[cfg(feature = "proc")]
     #[test]
     fn test_proc_rel(){
-        let parent_pid = ProcId::new();
+        let parent_pid = ProcId::from_usize(0);
         let child_pid = ProcId::from_usize(5);
         let exit_code = 1;
         //创建一个进程时同时创建进程关系
@@ -350,11 +353,13 @@ mod tests{
         assert_eq!(Some((child_pid, 1)), ProcRel::wait_child(&mut _procrel, child_pid));
     }
 
+    
     #[test]
+    #[cfg(feature = "thread")]
     fn test_proc_thread_rel(){
-        let parent_pid = ProcId::new();
+        let parent_pid = ProcId::from_usize(0);
         let child_pid = ProcId::from_usize(5);
-        let _tid1 = ThreadId::new();
+        let _tid1 = ThreadId::from_usize(0);
         let thread_pid = ThreadId::from_usize(3);
         let exit_code = 1;
         //创建一个进程时同时创建进程关系
@@ -388,4 +393,6 @@ mod tests{
         assert_eq!(_procrel.children, []);
         assert_eq!(Some(1), ProcThreadRel::wait_thread(&mut _procrel, thread_pid));
     }
+
+
 }

@@ -9,12 +9,13 @@ sbi-rt = { version = "0.0.2", features = ["legacy"] }
 xmas-elf = "0.8.0"
 riscv = "0.9"
 
-linker = { path = "../linker" }
-rcore-console = { path = "../console" }
-kernel-context = { path = "../kernel-context", features = ["foreign"] }
-kernel-alloc = { path = "../kernel-alloc" }
-kernel-vm = { path = "../kernel-vm" }
-syscall = { path = "../syscall", features = ["kernel"] }
+linker = { git = "https://github.com/shiwenlong12/linker"}
+rcore-console = { git = "https://github.com/shiwenlong12/console"}
+kernel-context = { git = "https://github.com/shiwenlong12/kernel-context" , features = ["foreign"] }
+kernel-alloc = { git = "https://github.com/shiwenlong12/kernel-alloc"}
+kernel-vm = { git = "https://github.com/shiwenlong12/kernel-vm"}
+syscall = { git = "https://github.com/shiwenlong12/syscall", features = ["kernel"] }
 
 [build-dependencies]
-linker = { path = "../linker" }
+linker = { git = "https://github.com/shiwenlong12/linker"}
+

@@ -12,15 +12,15 @@ riscv = "0.9"
 spin = "0.9.4"
 
 linker = { path = "../linker" }
-rcore-console = { path = "../console" }
+rcore-console = { git = "https://github.com/shiwenlong12/console"}
 kernel-context = { path = "../kernel-context", features = ["foreign"] }
 kernel-alloc = { path = "../kernel-alloc" }
 kernel-vm = { path = "../kernel-vm" }
 syscall = { path = "../syscall", features = ["kernel"] }
 rcore-task-manage = { path = "../task-manage", features = ["proc"]  }
 easy-fs = { path = "../easy-fs" }
-signal = { path = "../signal" }
-signal-impl = { path = "../signal-impl" }
+signal = { path = "../signal" , features = ["kernel"] }
+signal-impl = { path = "../signal-impl" , features = ["kernel"] }
 
 [build-dependencies]
 linker = { path = "../linker" }

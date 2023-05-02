@@ -4,6 +4,9 @@
 
 extern crate alloc;
 use alloc::boxed::Box;
+#[cfg(feature = "user")]
+use signal::LocalContext;
+#[cfg(feature = "kernel")]
 use kernel_context::LocalContext;
 use signal::{Signal, SignalAction, SignalNo, SignalResult, MAX_SIG};
 
@@ -185,9 +188,11 @@ impl Signal for SignalImpl {
 
 # [cfg(test)]
 mod tests{
-    use crate::SignalImpl;
+    use signal::Signal;
 
-    pub struct SyscallContext;
+    use crate::{SignalImpl, SignalSet};
+
+    // pub struct SyscallContext;
 
     // impl Signal for SyscallContext {
     //     fn kill(&self, _caller: Caller, pid: isize, signum: u8) -> isize {
@@ -277,7 +282,18 @@ mod tests{
 
     #[test]
     fn test_signal_impl() {
-        //SignalImpl::new();
+        let mut sig1 = SignalImpl::new();
+        let sig2 = SignalImpl::new();
+        let fetch1 = (&mut sig1).fetch_signal();
+        assert_eq!(None, fetch1);
+        let fetch2 = (&mut sig1).fetch_and_remove(signal::SignalNo::ERR);
+        assert_eq!(false, fetch2);
+        (&mut sig1).from_fork();
+        (&mut sig1).clear();
+        (&mut sig1).add_signal(signal::SignalNo::SIGABRT);
+        let hand1 = (& sig2).is_handling_signal();
+        assert_eq!(false, hand1);
+        (& sig2).get_action_ref(signal::SignalNo::SIGABRT);
     }
 
     #[test]
@@ -287,6 +303,10 @@ mod tests{
 
     #[test]
     fn test_signal_set() {
-        
+        let value = 1;
+        let mut sigset1 = SignalSet::empty();
+        SignalSet::new(value);
+        (&mut sigset1).reset(value);
+        (&mut sigset1).clear();
     }
 }
