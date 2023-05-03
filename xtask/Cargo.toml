@@ -15,4 +15,4 @@ serde = "1.0"
 serde_derive = "1.0"
 toml = "0.5.9"
 
-easy-fs = { path = "../easy-fs" }
+easy-fs = { git = "https://github.com/shiwenlong12/easy-fs"}

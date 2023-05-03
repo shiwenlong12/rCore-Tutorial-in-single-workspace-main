@@ -6,5 +6,5 @@ authors = ["YdrMaster <ydrml@hotmail.com>"]
 
 [dependencies]
 rcore-console = { git = "https://github.com/shiwenlong12/console"}
-syscall = { path = "../syscall", features = ["user"] }
+syscall = { git = "https://github.com/shiwenlong12/syscall", features = ["user"] }
 customizable-buddy = "0.0.2"

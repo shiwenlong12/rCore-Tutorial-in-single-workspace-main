@@ -11,16 +11,18 @@ xmas-elf = "0.8.0"
 riscv = "0.9"
 spin = "0.9.4"
 
-linker = { path = "../linker" }
+linker = { git = "https://github.com/shiwenlong12/linker"}
 rcore-console = { git = "https://github.com/shiwenlong12/console"}
-kernel-context = { path = "../kernel-context", features = ["foreign"] }
-kernel-alloc = { path = "../kernel-alloc" }
-kernel-vm = { path = "../kernel-vm" }
-syscall = { path = "../syscall", features = ["kernel"] }
-rcore-task-manage = { path = "../task-manage", features = ["proc"]  }
-easy-fs = { path = "../easy-fs" }
-signal = { path = "../signal" , features = ["kernel"] }
-signal-impl = { path = "../signal-impl" , features = ["kernel"] }
+kernel-context = { git = "https://github.com/shiwenlong12/kernel-context" , features = ["foreign"] }
+kernel-alloc = { git = "https://github.com/shiwenlong12/kernel-alloc"}
+kernel-vm = { git = "https://github.com/shiwenlong12/kernel-vm"}
+syscall = { git = "https://github.com/shiwenlong12/syscall", features = ["kernel"] }
+rcore-task-manage = { git = "https://github.com/shiwenlong12/task-manage", features = ["proc"] }
+easy-fs = { git = "https://github.com/shiwenlong12/easy-fs"}
+signal = { git = "https://github.com/shiwenlong12/signal" , features = ["kernel"] }
+signal-impl = { git = "https://github.com/shiwenlong12/signal-imple" , features = ["kernel"] }
 
 [build-dependencies]
-linker = { path = "../linker" }
+linker = { git = "https://github.com/shiwenlong12/linker"}
+
+

@@ -57,38 +57,38 @@ dependencies = [
 name = "ch2"
 version = "0.0.1"
 dependencies = [
- "kernel-context 0.1.0 (git+https://github.com/shiwenlong12/kernel-context)",
- "linker 0.0.1 (git+https://github.com/shiwenlong12/linker)",
+ "kernel-context",
+ "linker",
  "rcore-console",
- "riscv",
+ "riscv 0.9.0",
  "sbi-rt",
- "syscall 0.1.0 (git+https://github.com/shiwenlong12/syscall)",
+ "syscall",
 ]
 
 [[package]]
 name = "ch3"
 version = "0.0.1"
 dependencies = [
- "kernel-context 0.1.0 (git+https://github.com/shiwenlong12/kernel-context)",
- "linker 0.0.1 (git+https://github.com/shiwenlong12/linker)",
+ "kernel-context",
+ "linker",
  "rcore-console",
- "riscv",
+ "riscv 0.9.0",
  "sbi-rt",
- "syscall 0.1.0 (git+https://github.com/shiwenlong12/syscall)",
+ "syscall",
 ]
 
 [[package]]
 name = "ch4"
 version = "0.0.1"
 dependencies = [
- "kernel-alloc 0.1.0 (git+https://github.com/shiwenlong12/kernel-alloc)",
- "kernel-context 0.1.0 (git+https://github.com/shiwenlong12/kernel-context)",
- "kernel-vm 0.1.0 (git+https://github.com/shiwenlong12/kernel-vm)",
- "linker 0.0.1 (git+https://github.com/shiwenlong12/linker)",
+ "kernel-alloc",
+ "kernel-context",
+ "kernel-vm",
+ "linker",
  "rcore-console",
- "riscv",
+ "riscv 0.9.0",
  "sbi-rt",
- "syscall 0.1.0 (git+https://github.com/shiwenlong12/syscall)",
+ "syscall",
  "xmas-elf",
 ]
 
@@ -96,16 +96,16 @@ dependencies = [
 name = "ch5"
 version = "0.0.1"
 dependencies = [
- "kernel-alloc 0.1.0 (git+https://github.com/shiwenlong12/kernel-alloc)",
- "kernel-context 0.1.0 (git+https://github.com/shiwenlong12/kernel-context)",
- "kernel-vm 0.1.0 (git+https://github.com/shiwenlong12/kernel-vm)",
- "linker 0.0.1 (git+https://github.com/shiwenlong12/linker)",
+ "kernel-alloc",
+ "kernel-context",
+ "kernel-vm",
+ "linker",
  "rcore-console",
- "rcore-task-manage 0.0.0 (git+https://github.com/shiwenlong12/task-manage)",
- "riscv",
+ "rcore-task-manage",
+ "riscv 0.9.0",
  "sbi-rt",
  "spin 0.9.4",
- "syscall 0.1.0 (git+https://github.com/shiwenlong12/syscall)",
+ "syscall",
  "xmas-elf",
 ]
 
@@ -113,17 +113,17 @@ dependencies = [
 name = "ch6"
 version = "0.0.1"
 dependencies = [
- "easy-fs 0.1.0 (git+https://github.com/shiwenlong12/easy-fs)",
- "kernel-alloc 0.1.0 (git+https://github.com/shiwenlong12/kernel-alloc)",
- "kernel-context 0.1.0 (git+https://github.com/shiwenlong12/kernel-context)",
- "kernel-vm 0.1.0 (git+https://github.com/shiwenlong12/kernel-vm)",
- "linker 0.0.1 (git+https://github.com/shiwenlong12/linker)",
+ "easy-fs",
+ "kernel-alloc",
+ "kernel-context",
+ "kernel-vm",
+ "linker",
  "rcore-console",
- "rcore-task-manage 0.0.0 (git+https://github.com/shiwenlong12/task-manage)",
- "riscv",
+ "rcore-task-manage",
+ "riscv 0.9.0",
  "sbi-rt",
  "spin 0.9.4",
- "syscall 0.1.0 (git+https://github.com/shiwenlong12/syscall)",
+ "syscall",
  "virtio-drivers",
  "xmas-elf",
 ]
@@ -132,19 +132,19 @@ dependencies = [
 name = "ch7"
 version = "0.0.1"
 dependencies = [
- "easy-fs 0.1.0",
- "kernel-alloc 0.1.0",
- "kernel-context 0.1.0",
- "kernel-vm 0.1.0",
- "linker 0.0.1",
+ "easy-fs",
+ "kernel-alloc",
+ "kernel-context",
+ "kernel-vm",
+ "linker",
  "rcore-console",
- "rcore-task-manage 0.0.0",
- "riscv",
+ "rcore-task-manage",
+ "riscv 0.9.0",
  "sbi-rt",
  "signal",
  "signal-impl",
  "spin 0.9.4",
- "syscall 0.1.0",
+ "syscall",
  "virtio-drivers",
  "xmas-elf",
 ]
@@ -153,20 +153,20 @@ dependencies = [
 name = "ch8"
 version = "0.0.1"
 dependencies = [
- "easy-fs 0.1.0",
- "kernel-alloc 0.1.0",
- "kernel-context 0.1.0",
- "kernel-vm 0.1.0",
- "linker 0.0.1",
+ "easy-fs",
+ "kernel-alloc",
+ "kernel-context",
+ "kernel-vm",
+ "linker",
  "rcore-console",
- "rcore-task-manage 0.0.0",
- "riscv",
+ "rcore-task-manage",
+ "riscv 0.9.0",
  "sbi-rt",
  "signal",
  "signal-impl",
  "spin 0.9.4",
  "sync",
- "syscall 0.1.0",
+ "syscall",
  "virtio-drivers",
  "xmas-elf",
 ]
@@ -219,15 +219,6 @@ name = "customizable-buddy"
 version = "0.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6f6c584413bb642e0f8c33faa63d7bd285335eb01b4db80be4119926ddcb96be"
-
-[[package]]
-name = "easy-fs"
-version = "0.1.0"
-dependencies = [
- "bitflags",
- "spin 0.7.1",
- "virtio-drivers",
-]
 
 [[package]]
 name = "easy-fs"
@@ -310,15 +301,6 @@ dependencies = [
 [[package]]
 name = "kernel-alloc"
 version = "0.1.0"
-dependencies = [
- "customizable-buddy 0.0.3",
- "log",
- "page-table",
-]
-
-[[package]]
-name = "kernel-alloc"
-version = "0.1.0"
 source = "git+https://github.com/shiwenlong12/kernel-alloc#25bc43e6e2c801ec8b07f9f0cf85effbe4e9be19"
 dependencies = [
  "customizable-buddy 0.0.3",
@@ -329,23 +311,8 @@ dependencies = [
 [[package]]
 name = "kernel-context"
 version = "0.1.0"
-dependencies = [
- "spin 0.9.4",
-]
-
-[[package]]
-name = "kernel-context"
-version = "0.1.0"
 source = "git+https://github.com/shiwenlong12/kernel-context#9787baf2ab3aa2b862543db05a2482cc45320e0e"
 dependencies = [
- "spin 0.9.4",
-]
-
-[[package]]
-name = "kernel-vm"
-version = "0.1.0"
-dependencies = [
- "page-table",
  "spin 0.9.4",
 ]
 
@@ -363,10 +330,6 @@ name = "libc"
 version = "0.2.137"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fc7fcc620a3bff7cdd7a365be3376c97191aeaccc2a603e600951e452615bf89"
-
-[[package]]
-name = "linker"
-version = "0.0.1"
 
 [[package]]
 name = "linker"
@@ -504,11 +467,18 @@ dependencies = [
 [[package]]
 name = "rcore-task-manage"
 version = "0.0.0"
+source = "git+https://github.com/shiwenlong12/task-manage#67658292f86518ddd2d9ba6545c5c8dd2e3f17c4"
 
 [[package]]
-name = "rcore-task-manage"
-version = "0.0.0"
-source = "git+https://github.com/shiwenlong12/task-manage#67658292f86518ddd2d9ba6545c5c8dd2e3f17c4"
+name = "riscv"
+version = "0.8.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5e2856a701069e2d262b264750d382407d272d5527f7a51d3777d1805b4e2d3c"
+dependencies = [
+ "bare-metal",
+ "bit_field",
+ "embedded-hal",
+]
 
 [[package]]
 name = "riscv"
@@ -579,16 +549,10 @@ dependencies = [
 [[package]]
 name = "signal"
 version = "0.1.0"
+source = "git+https://github.com/shiwenlong12/signal#4cf73010735ddb8753a4b7cafec099a8047ff67a"
 dependencies = [
- "kernel-context 0.1.0",
- "signal-defs 0.1.0",
-]
-
-[[package]]
-name = "signal-defs"
-version = "0.1.0"
-dependencies = [
- "numeric-enum-macro",
+ "kernel-context",
+ "signal-defs",
 ]
 
 [[package]]
@@ -602,8 +566,9 @@ dependencies = [
 [[package]]
 name = "signal-impl"
 version = "0.1.0"
+source = "git+https://github.com/shiwenlong12/signal-imple#db74e862dc2b2aa70c3d856e22bb85117e9759a9"
 dependencies = [
- "kernel-context 0.1.0",
+ "kernel-context",
  "signal",
 ]
 
@@ -648,18 +613,10 @@ dependencies = [
 [[package]]
 name = "sync"
 version = "0.1.0"
+source = "git+https://github.com/shiwenlong12/sync#707a691a94aaa5a2c4651711b88597df027737a5"
 dependencies = [
- "rcore-task-manage 0.0.0",
- "riscv",
- "spin 0.9.4",
-]
-
-[[package]]
-name = "syscall"
-version = "0.1.0"
-dependencies = [
- "bitflags",
- "signal-defs 0.1.0",
+ "rcore-task-manage",
+ "riscv 0.8.0",
  "spin 0.9.4",
 ]
 
@@ -669,7 +626,7 @@ version = "0.1.0"
 source = "git+https://github.com/shiwenlong12/syscall#e7064f3fb1fbeae91fc00718363c6b856cc30cfb"
 dependencies = [
  "bitflags",
- "signal-defs 0.1.0 (git+https://github.com/shiwenlong12/signal-defs)",
+ "signal-defs",
  "spin 0.9.4",
 ]
 
@@ -703,7 +660,7 @@ version = "0.0.1"
 dependencies = [
  "customizable-buddy 0.0.2",
  "rcore-console",
- "syscall 0.1.0",
+ "syscall",
 ]
 
 [[package]]
@@ -836,7 +793,7 @@ name = "xtask"
 version = "0.0.1"
 dependencies = [
  "clap",
- "easy-fs 0.1.0",
+ "easy-fs",
  "once_cell",
  "os-xtask-utils",
  "serde",
