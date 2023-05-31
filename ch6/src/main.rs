@@ -133,6 +133,7 @@ fn panic(info: &core::panic::PanicInfo) -> ! {
     loop {}
 }
 
+//虚拟机中的 Virtio 块
 pub const MMIO: &[(usize, usize)] = &[
     (0x1000_1000, 0x00_1000), // Virtio Block in virt machine
 ];
